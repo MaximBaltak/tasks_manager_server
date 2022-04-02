@@ -1,24 +1,11 @@
-import express from 'express'
-import pg from 'pg-promise'
-import dbConfig from './db.config.json'
-const app = express()
-const port:string=process.env.PORT||'4000'
-const connection={
-    user:dbConfig.user,
-    password:dbConfig.password,
-    port:dbConfig.port,
-    host:dbConfig.host,
-    database:dbConfig.database
-}
-const db=pg()(connection)
+import express, {Express, Request, Response} from 'express'
+import { db } from './database/index.';
+import {serverStart} from "./startServer";
+import setCors from "./middlewares/CORS";
+const app:Express= express()
 
-
-app.listen(port,async()=>{
-    try {
-        await db.connect()
-        console.log('connected database')
-    }catch (e){
-        console.log('not connected database')
-    }
-    console.log('server listening on port '+port)
+app.use(setCors)
+app.get("/",(req:Request, res:Response) => {
+    res.send('hello')
 })
+serverStart(app,db)
