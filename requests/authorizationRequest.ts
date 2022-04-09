@@ -14,15 +14,16 @@ class AuthorizationRequest implements IAuthorizationRequest {
                 const user: any = await db.query('SELECT * FROM users WHERE login=$1', [
                     login,
                 ])
-                if(compareSync(password,user[0].password)&&user){
+                if (compareSync(password, user[0].password) && user) {
                     const accessToken = generateAccessToken(user[0].id, login)
                     const refreshToken = generateRefreshToken(user[0].refresh_id)
-                    res.status(200).json({message: 'авторизация успешна',
+                    res.status(200).json({
+                        message: 'авторизация успешна',
                         accessToken,
                         refreshToken,
-                        expiresIn:access_token.time
+                        expiresIn: access_token.time
                     })
-                }else {
+                } else {
                     res.status(400).json({message: 'такого пользователя не существует'})
                 }
 
@@ -48,10 +49,11 @@ class AuthorizationRequest implements IAuthorizationRequest {
                 ])
                 const accessToken = generateAccessToken(user[0].id, login)
                 const refreshToken = generateRefreshToken(user[0].refresh_id)
-                res.status(200).json({message: 'пользователь добавлен',
+                res.status(200).json({
+                    message: 'пользователь добавлен',
                     accessToken,
                     refreshToken,
-                    expiresIn:access_token.time
+                    expiresIn: access_token.time
                 })
             } catch (e) {
                 console.log(e)
