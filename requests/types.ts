@@ -16,6 +16,9 @@ export interface ITasksRequest {
 
     deleteTaskOrTasks(req: IRequestUser, res: Response): void
 }
+export interface IUpdateToken{
+    update(req:Request,res:Response):void
+}
 
 export interface ITask {
     title: string,

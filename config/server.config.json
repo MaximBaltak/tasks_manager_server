@@ -3,7 +3,7 @@
   "port": 4000,
   "access_token": {
     "secret_key": "ACCESS_TOKEN",
-    "time": "15m"
+    "time": "2m"
   },
   "refresh_token": {
     "secret_key": "REFRESH_TOKEN",
