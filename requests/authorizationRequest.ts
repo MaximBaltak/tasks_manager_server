@@ -21,7 +21,9 @@ class AuthorizationRequest implements IAuthorizationRequest {
                         message: 'авторизация успешна',
                         accessToken,
                         refreshToken,
-                        expiresIn: access_token.time
+                        access_expiresIn: access_token.time,
+                        access_createDate: new Date().getTime(),
+
                     })
                 } else {
                     res.status(400).json({message: 'такого пользователя не существует'})
@@ -53,7 +55,8 @@ class AuthorizationRequest implements IAuthorizationRequest {
                     message: 'пользователь добавлен',
                     accessToken,
                     refreshToken,
-                    expiresIn: access_token.time
+                    access_expiresIn: access_token.time,
+                    access_createDate: new Date().getTime()
                 })
             } catch (e) {
                 console.log(e)

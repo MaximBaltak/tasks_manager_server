@@ -20,7 +20,12 @@ export class RecordingRequest implements IUpdateToken {
                         refreshId,
                         user.login
                     ])
-                    res.status(200).json({message:'токен обновлен',accessToken,refreshToken,expiresIn: access_token.time})
+                    res.status(200).json({message:'токен обновлен',
+                        accessToken,
+                        refreshToken,
+                        access_expiresIn: access_token.time,
+                        access_createDate: new Date().getTime()
+                    })
                 }catch (e){
                     res.status(500).json({message:"ошибка сервера"})
                 }
