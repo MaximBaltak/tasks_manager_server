@@ -14,24 +14,27 @@ class AuthorizationRequest implements IAuthorizationRequest {
                 const user: any = await db.query('SELECT * FROM users WHERE login=$1', [
                     login,
                 ])
-                if (compareSync(password, user[0].password) && user) {
-                    const accessToken = generateAccessToken(user[0].id, login)
-                    const refreshToken = generateRefreshToken(user[0].refresh_id)
-                    res.status(200).json({
-                        message: 'авторизация успешна',
-                        accessToken,
-                        refreshToken,
-                        access_expiresIn: access_token.time,
-                        access_createDate: new Date().getTime(),
+                if(user){
+                    if (compareSync(password, user[0].password) && user) {
+                        const accessToken = generateAccessToken(user[0].id, login)
+                        const refreshToken = generateRefreshToken(user[0].refresh_id)
+                        res.status(200).json({
+                            message: 'авторизация успешна',
+                            accessToken,
+                            refreshToken,
+                            access_expiresIn: access_token.time,
+                            access_createDate: new Date().getTime(),
 
-                    })
-                } else {
-                    res.status(400).json({message: 'такого пользователя не существует'})
+                        })
+                    } else {
+                        res.status(500).json({message: 'такого пользователя не существует'})
+                    }
+                }else {
+                    res.status(500).json({message: 'Ошибка сервера'})
                 }
 
             } catch (e) {
-                console.log(e)
-                res.status(500).json({message: 'ошибка сервера'})
+                res.status(500).json({message: 'такого пользователя не существует'})
             }
         } else {
             res.status(400).json({message: 'нет данных'})
